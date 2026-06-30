@@ -1,0 +1,17 @@
+- hosts: all
+  become: true
+  tasks:
+  - name: Package update apt and upgrades
+    apt:
+      upgrade: yes
+      update_cache: yes
+      #cache_valid_time: 86400 
+  - name: Install nginx software
+    apt:
+      name: nginx
+      state: present
+
+  - name: start nginx service
+    service:
+      name: nginx
+      state: started
