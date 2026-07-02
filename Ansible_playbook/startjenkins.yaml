@@ -1,46 +1,41 @@
+---
 - hosts: webservers
   become: true
   remote_user: ubuntu
+
   tasks:
-   - name: updating apt and cache on all ubuntu servers
-     apt:
-       upgrade: yes
-       update_cache: yes
-   - name: Add Jenkins repository
-      deb822_repository:
-        name: jenkins
-        types: [deb]
-        uris: https://pkg.jenkins.io/debian-stable
-        suites: binary
-        components: []
-        signed_by: https://pkg.jenkins.io/debian/jenkins.io-2023.key
+
+    - name: Update apt cache and upgrade packages
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Add Jenkins repository
+      apt_repository:
+        repo: "deb https://pkg.jenkins.io/debian-stable binary/"
         state: present
 
+    - name: Add Jenkins repository GPG key
+      apt_key:
+        url: https://pkg.jenkins.io/debian/jenkins.io-2023.key
+        state: present
 
-   - name: setting up jenkins repo
-      
-     apt_repository: 
-       repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
-       state: present
-       
-   - name: ensure the jenkins apt repository key is installed
-     apt_key:
-       url: https://pkg.jenkins.io/debian/jenkins.io-2023.key 
-       state: present
+    - name: Update apt cache after adding Jenkins repository
+      apt:
+        update_cache: yes
 
-   - name: Install OpenJDK Java
-     apt:
-       name: "{{ item }}"
-       state: present
-     with_items:
-       openjdk-17-jre
-       
-   - name: installing jenkins software   #it takes some time while downloading jenkins be Subtle
-     apt:
-       name: jenkins
-       state: present
+    - name: Install OpenJDK 17
+      apt:
+        name: openjdk-17-jre
+        state: present
 
-   - name: start the service
-     service:
-       name: jenkins
-       state: started
+    - name: Install Jenkins
+      apt:
+        name: jenkins
+        state: present
+
+    - name: Start and enable Jenkins
+      service:
+        name: jenkins
+        state: started
+        enabled: yes

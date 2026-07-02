@@ -1,0 +1,108 @@
+---
+- hosts: webservers
+  become: true
+  remote_user: ubuntu
+  vars:
+    ansible_python_interpreter: /usr/bin/python3.14
+
+  tasks:
+
+    - name: Install required dependencies
+      apt:
+        name:
+          - curl
+          - gnupg
+          - ca-certificates
+          - apt-transport-https
+        state: present
+
+    - name: Remove old Jenkins keyring if exists (clean slate)
+      file:
+        path: /usr/share/keyrings/jenkins-keyring.gpg
+        state: absent
+
+    - name: Remove old Jenkins repo file if exists (clean slate)
+      file:
+        path: /etc/apt/sources.list.d/jenkins.list
+        state: absent
+
+    - name: Download Jenkins GPG key (raw)
+      get_url:
+        url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+        dest: /tmp/jenkins.io-2023.key
+        mode: '0644'
+        force: yes
+
+    - name: Convert Jenkins GPG key to binary keyring format
+      shell: >
+        gpg --batch --yes
+        --dearmor
+        --output /usr/share/keyrings/jenkins-keyring.gpg
+        /tmp/jenkins.io-2023.key
+      args:
+        executable: /bin/bash
+
+    - name: Set correct permissions on keyring
+      file:
+        path: /usr/share/keyrings/jenkins-keyring.gpg
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Verify keyring file exists and is not empty
+      stat:
+        path: /usr/share/keyrings/jenkins-keyring.gpg
+      register: keyring_stat
+
+    - name: Fail if keyring was not created properly
+      fail:
+        msg: "Jenkins keyring file is missing or empty. GPG conversion failed."
+      when: not keyring_stat.stat.exists or keyring_stat.stat.size == 0
+
+    - name: Add Jenkins apt repository with signed-by reference
+      copy:
+        dest: /etc/apt/sources.list.d/jenkins.list
+        content: "deb [signed-by=/usr/share/keyrings/jenkins-keyring.gpg] https://pkg.jenkins.io/debian-stable binary/\n"
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Update apt cache after adding Jenkins repository
+      apt:
+        update_cache: yes
+
+    - name: Install OpenJDK 17
+      apt:
+        name: openjdk-17-jre
+        state: present
+
+    - name: Install Jenkins
+      apt:
+        name: jenkins
+        state: present
+
+    - name: Start and enable Jenkins
+      service:
+        name: jenkins
+        state: started
+        enabled: yes
+
+    - name: Wait for Jenkins to start on port 8080
+      wait_for:
+        port: 8080
+        delay: 10
+        timeout: 90
+
+    - name: Get Jenkins initial admin password
+      command: cat /var/lib/jenkins/secrets/initialAdminPassword
+      register: jenkins_password
+      changed_when: false
+
+    - name: Print Jenkins initial admin password
+      debug:
+        msg: "Jenkins is ready. Initial admin password: {{ jenkins_password.stdout }}"
+
+    - name: Clean up temporary key file
+      file:
+        path: /tmp/jenkins.io-2023.key
+        state: absent
