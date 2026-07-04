@@ -4,6 +4,58 @@ Ansible is a radically simple, open-source IT automation engine used for configu
 
 Project workflow:
 
+Provision 3 or 4 EC2 instances using terraform. The Terraform script should name 1 of the servers  - ansible contoller, 2nd server - remote server 1 and 3rd server - remote server 2.
+
+1. Log into AWS console.
+2. Check the created EC2 instances are successfully created.
+3. Click on the instance name ansible controller.
+4. Using EC2 connect, click on ec2 instance connect to access the terminal.
+5. To ensure it is the ansible controller - type ansible --version.
+6. The following are extra unnecessary steps:
+6a. Type cd .ssh (to check the contents)
+6b. Type ls (to show the authorised key)
+6c. Type ssh-keygen (this automatically creates the private ad public ids)
+7. Press enter 3 times until a private and public key is created in the ssh folder.
+8. Then cd to the ssh folder
+9. Type cd .ssh
+10.Type  ls (this will show the private and the public ids) i.e. authorised_key, id_ed25519, id-ed22519.pub
+11. Next connect the public id of the ansible controller to the remote servers.
+12. Type cat, the copy and paste the id_ed25519.pub
+13. copy the code generated.
+14. Note the ip address of the ansible controller.
+
+
+1. Click on the the remote server 1 in EC2.
+2. Connect to ec2 instance connect.
+3. Type cd .ssh and press enter
+4. Type ls
+5. copy the authorised key
+6. Type vi and paste the authorised key
+7. A key is generated
+8. Press i and scroll to the end of the key in step 7.
+9. paste the code generated from the ansible controller.
+10. Then save using Esc:wq!
+11. Note the ip address created for remote server 1.
+
+Repeat steps 1-11. Note the ip address for remote server 2.
+
+For both remote servers 1 and 2:
+1. Type cd ..
+2. Type clear for both.
+
+For the ansible controller
+1. Type cd ..
+2. To ensure there is a connection to the ansible controller, 
+3. Type ping google.com.
+4. Click ctrl+ c to stop the pings to google.
+5.Type clear
+
+vi edits the contents of a folder/directory
+cat shows the contents of a folder/directory
+
+For ansible playbook; 
+
+
 
 
 <img width="824" height="359" alt="Image" src="https://github.com/user-attachments/assets/1e4ae767-30e4-4a38-a288-63471deb10a0" />
