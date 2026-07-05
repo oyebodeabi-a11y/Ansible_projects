@@ -1,7 +1,6 @@
 # Ansible_projects
 Ansible is a radically simple, open-source IT automation engine used for configuration management, application deployment, and cloud provisioning. Its agentless architecture connects to remote nodes via standard OpenSSH without requiring extra software on the target systems.
 
-
 Project workflow:
 
 Provision 3 or 4 EC2 instances using terraform. The Terraform script should name 1 of the servers  - ansible contoller, 2nd server - remote server 1 and 3rd server - remote server 2.
@@ -53,17 +52,38 @@ For the ansible controller
 vi edits the contents of a folder/directory
 cat shows the contents of a folder/directory
 
-For ansible playbook; 
+For ansible playbook:
 
-
+1. Create an inventory to create a group for the servers.
+2. Use [] and type inside the box - webservers.
+3. copy and paste the two remote server ip addresses.
+4. save the file Esc:wq!
+5. Test we can ping or ssh to the remote servers, type 
+ansible -i inventory webservers -m ping
+6. It should show success in green for both servers.
+7. In Vs code, create the folder Ansible playbook.
+8. Create the file, startnginx.yaml and enter the required script. Copy the script.
+9. In Ansible controller ip, create a file; vi startnginx.yaml
+10. Type i
+11. Paste the code in step 8. 
+12. Save the code using Esc:wq!
+13. Type the command; ansible-playbook -i inventory startnginx.yaml
+14. ssh to one of the remote servers, type ssh ip address of remote server 1
+15. check nginx is there, sudo systemctl status nginx
+16. Go back to ansible controller, type exit.
+17. To stop nginx running, in the ansible controller, create the file using;
+vi stopnginx.yaml
+18. Follow steps 8-14.
+19. Then type, ansible-playbook -i inventory stopnginx.yaml
+20. To purge nginx in each remote server, sudo apt purge nginx.
+21. Repeat the same process for apache2.
+22. Repeat the same process for jenkins.
 
 
 <img width="824" height="359" alt="Image" src="https://github.com/user-attachments/assets/1e4ae767-30e4-4a38-a288-63471deb10a0" />
 
 
 <img width="455" height="182" alt="Image" src="https://github.com/user-attachments/assets/9684c270-562a-493f-984d-022b32d695fd" />
-
-
 
 
 Challenges:
