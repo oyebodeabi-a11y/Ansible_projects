@@ -85,10 +85,14 @@ vi stopnginx.yaml
 
 <img width="455" height="182" alt="Image" src="https://github.com/user-attachments/assets/9684c270-562a-493f-984d-022b32d695fd" />
 
+<img width="746" height="414" alt="Image" src="https://github.com/user-attachments/assets/8068e0f7-4053-46b7-a8b5-50c73b71bdf7" />
+
 
 Challenges:
 
 1. Port 80 to allow ingress rules for http was not included in the terraform files. Hence, Nginx in the brower was not downloaded successfully.
+
+2. Issues with Jenkins code - 
 
 
 
