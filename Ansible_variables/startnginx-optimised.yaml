@@ -1,0 +1,18 @@
+- name: installation of "{{appname}}"
+  hosts: all
+  become: true
+  vars:
+   servicestate: started
+   appstate: present
+   appname: nginx
+  tasks:
+  - name: installing "{{appname}}"
+    apt: 
+      name: "{{appname}}"
+      state: "{{appstate}}"
+
+  - name: checking for "{{appname}}" service
+    service:
+      name: "{{appname}}"
+      state: "{{servicestate}}"
+      enabled: yes
