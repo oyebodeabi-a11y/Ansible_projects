@@ -106,4 +106,11 @@ Why Use Roles?
 3. Standardization: Roles enforce a predictable folder layout, making it easy for different engineers to understand your code.
 4. Shareability: You can publish and download roles via Ansible Galaxy.
 
+# to create a role in ansible run the comand below
+
+ansible-galaxy init apache2_role
+
+
+# Now to run ansible patching role on the remote servers run the command below
+
 

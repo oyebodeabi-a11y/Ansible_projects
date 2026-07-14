@@ -1,4 +1,4 @@
-- name: Configure apache on all remote ubuntu  servers
+- name: Configure apache2 on all remote ubuntu  servers
   hosts: webservers
   become: yes
 

@@ -3,7 +3,7 @@
    upgrade: yes
    update_cache: yes
 
-- name: Install Apache on remote ubuntu servers
+- name: Install Apache2 on remote ubuntu servers
   apt:
    name: apache2
    state: present
