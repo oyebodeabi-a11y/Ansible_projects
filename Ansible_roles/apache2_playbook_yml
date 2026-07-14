@@ -1,0 +1,6 @@
+- name: Configure apache on all remote ubuntu  servers
+  hosts: webservers
+  become: yes
+
+  roles:
+  - apache2_role

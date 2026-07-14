@@ -94,5 +94,16 @@ Challenges:
 
 2. Issues with Jenkins code - 
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## Starting Ansible roles
+
+Ansible roles are modular, reusable bundles of automation content. They group related tasks, variables, templates, and files into a strict directory structure. Instead of writing one massive playbook, roles let you break complex configurations into distinct, manageable parts that can be easily reused and shared.
+
+Why Use Roles?
+1. Modularity: You can break down large playbooks into smaller, focused chunks.
+2. Reusability: You can write a role once (e.g., to install Nginx or set up a database) and use it across multiple projects.
+3. Standardization: Roles enforce a predictable folder layout, making it easy for different engineers to understand your code.
+4. Shareability: You can publish and download roles via Ansible Galaxy.
 
 
