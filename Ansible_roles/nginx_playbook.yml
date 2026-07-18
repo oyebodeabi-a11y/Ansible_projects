@@ -1,0 +1,6 @@
+- name: Configure nginx on all remote ubuntu  servers
+  hosts: webservers
+  become: yes
+
+  roles:
+  - nginx_role

@@ -94,6 +94,12 @@ Challenges:
 
 2. Issues with Jenkins code - 
 
+3. Issues when running ansible - i inventory webservers -m ping
+The error "Host key verification failed" occurs because your Ansible control node does not recognize the SSH host keys of the target servers (10.0.2.22 and 10.0.3.234). This is a security feature to prevent man-in-the-middle attacks; when you connect to a server for the first time, you must verify and store its "fingerprint" in your ~/.ssh/known_hosts file.
+To resolve : ssh ubuntu@10.0.2.22 ssh ubuntu@10.0.3.234
+
+
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Starting Ansible roles
@@ -110,7 +116,18 @@ Why Use Roles?
 
 ansible-galaxy init apache2_role
 
+Then type : sudo apt install tree
+
+Type: tree apache2_role
+
+<img width="455" height="256" alt="Image" src="https://github.com/user-attachments/assets/d7f0aeeb-3d49-4b1a-b54c-0d94ef0e421a" />
+
+This show the tree of ansible role folders needed for apache2_role in the aws ansible controller. 
+
 
 # Now to run ansible patching role on the remote servers run the command below
+
+Final command to run ansible roles:
+ansible-playbook -i inventory apache2_playbook.yml
 
 
