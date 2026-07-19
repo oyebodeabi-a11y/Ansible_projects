@@ -97,6 +97,7 @@ Challenges:
 3. Issues when running ansible - i inventory webservers -m ping
 The error "Host key verification failed" occurs because your Ansible control node does not recognize the SSH host keys of the target servers (10.0.2.22 and 10.0.3.234). This is a security feature to prevent man-in-the-middle attacks; when you connect to a server for the first time, you must verify and store its "fingerprint" in your ~/.ssh/known_hosts file.
 To resolve : ssh ubuntu@10.0.2.22 ssh ubuntu@10.0.3.234
+Then sudo apt install ansible-core
 
 
 
@@ -129,5 +130,13 @@ This show the tree of ansible role folders needed for apache2_role in the aws an
 
 Final command to run ansible roles:
 ansible-playbook -i inventory apache2_playbook.yml
+
+<img width="374" height="289" alt="Image" src="https://github.com/user-attachments/assets/93a86fc3-623a-4a86-a49f-70173bb6bd3b" />
+
+<img width="407" height="256" alt="Image" src="https://github.com/user-attachments/assets/1952cc0e-5045-486d-8447-6d858aaffe9e" />
+
+
+
+
 
 

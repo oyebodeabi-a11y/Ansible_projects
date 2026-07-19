@@ -1,0 +1,46 @@
+  - name: updating apt and cache on all ubuntu servers
+    apt:
+       upgrade: yes
+       update_cache: yes
+  - name: ensure the jenkins apt repository key is installed
+    apt_key:
+       - name: Ensure keyrings directory exists
+    file:
+      path: /etc/apt/keyrings
+      state: directory
+      mode: '0755'
+
+  - name: Download Jenkins GPG key
+    get_url:
+      url: https://pkg.jenkins.io/debian/jenkins.io-2023.key
+      dest: /etc/apt/keyrings/jenkins.asc
+      mode: '0644'
+
+  - name: setting up jenkins repo
+      
+  - name: Setting up Jenkins repo
+    apt_repository:
+      repo: "deb [signed-by=/etc/apt/keyrings/jenkins.asc] https://pkg.jenkins.io/debian-stable binary/"
+      state: present
+      filename: jenkins
+       
+  - name: ensure the jenkins apt repository key is installed
+    apt_key:
+       url: https://pkg.jenkins.io/debian/jenkins.io-2023.key 
+       state: present
+
+  - name: Install OpenJDK Java
+    apt:
+       name: openjdk-17-jre
+       state: present
+    
+       
+  - name: installing jenkins software   #it takes some time while downloading jenkins be Subtle
+    apt:
+       name: jenkins
+       state: present
+
+  - name: start the service
+    service:
+       name: jenkins
+       state: started
