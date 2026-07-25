@@ -1,0 +1,35 @@
+---
+
+- hosts: webservers #here ensure that node instance 
+  become: true
+
+  tasks:
+    - name: update ec2 instance
+      apt:
+        name: '*'
+        state: latest
+        update_cache: yes
+
+    - name: install apache server
+      apt:
+        name: 
+         - apache2
+        
+        state: latest
+        
+    - name: remove default apache index file
+      ansible.builtin.file:
+        path: /var/www/html/index.html
+        state: absent
+
+    - name: clone repo directly
+      git:
+        repo: https://github.com/azeezsalu/jupiter.git
+        dest: /var/www/html
+        version: main
+
+    - name: start apache server, if not started already
+      ansible.builtin.service:
+        enabled: yes
+        name: apache2
+        state: started

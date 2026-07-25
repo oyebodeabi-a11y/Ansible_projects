@@ -87,6 +87,7 @@ vi stopnginx.yaml
 
 <img width="746" height="414" alt="Image" src="https://github.com/user-attachments/assets/8068e0f7-4053-46b7-a8b5-50c73b71bdf7" />
 
+<img width="734" height="401" alt="Image" src="https://github.com/user-attachments/assets/e053e446-4950-482d-949b-7b97957f96b7" />
 
 Challenges:
 

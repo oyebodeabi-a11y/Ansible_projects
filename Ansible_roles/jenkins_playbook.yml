@@ -1,4 +1,4 @@
-- name: Configure apache2 on all remote ubuntu  servers
+- name: Configure jenkins on all remote ubuntu  servers
   hosts: webservers
   become: yes
 
