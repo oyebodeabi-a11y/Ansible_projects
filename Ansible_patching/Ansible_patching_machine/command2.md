@@ -15,7 +15,8 @@ Sort vulnerabilities according to priority to identify which assets require imme
 
 Patch your systems to protect them from a potential cyber-attack.
 Track your patch posture and improve your patching strategy by reporting progress.
-System administrators and developers must keep their systems up to date and apply all security patches. Patching packages is a chore that no one enjoys. There are three different types of patching they are
+System administrators and developers must keep their systems up to date and apply all security patches. Patching packages is a chore that no one enjoys. There are three different types of patching: 
+They are:
 
 Patch all OS packages to the latest version.
 Apply all security patches.
